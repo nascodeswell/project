@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Exo+2:wght@200;400;700&display=swap" rel="stylesheet">
+  <title>Nassirah Nelson</title>
+  <style>
+    :root {
+      --bg:          #1a1610;
+      --bg-2:        #211d16;
+      --bg-3:        #2a251d;
+      --bg-4:        #332e25;
+      --rule:        #3d3729;
+      --dim:         #7a7060;
+      --body-text:   #cdc4b0;
+      --bright:      #f2ead6;
+      --amber:       #d4a843;
+      --amber-dim:   #b08c32;
+      --amber-glow:  rgba(212,168,67,0.09);
+      --rust:        #c94f2c;
+      --rust-dim:    #a33f22;
+      --rust-glow:   rgba(201,79,44,0.09);
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--body-text);
+      font-family: 'Exo 2', sans-serif;
+      font-weight: 400;
+      overflow-x: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(212,168,67,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(212,168,67,0.018) 1px, transparent 1px);
+      background-size: 72px 72px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+
+    nav.navbar {
+      background: rgba(26,22,16,0.97);
+      border-bottom: 1px solid rgba(212,168,67,0.14);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .navbar-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.25rem;
+      color: var(--amber) !important;
+      letter-spacing: 0.1em;
+    }
+
+    .nav-link {
+      font-family: 'Share Tech Mono', monospace;
+      color: var(--dim) !important;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.4rem 1rem !important;
+      transition: color 0.25s;
+      position: relative;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 2px;
+      left: 1rem;
+      right: 1rem;
+      height: 1px;
+      background: var(--amber);
+      transform: scaleX(0);
+      transition: transform 0.25s ease;
+    }
+
+    .nav-link:hover {
+      color: var(--amber) !important;
+    }
+
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+
+
+    section {
+      position: relative;
+      z-index: 1;
+      padding: 7rem 0;
+    }
+
+    .eyebrow {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.7rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--amber);
+      margin-bottom: 0.75rem;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+      line-height: 1.0;
+      letter-spacing: 0.02em;
+      color: var(--bright);
+      margin-bottom: 3rem;
+    }
+
+    .section-title strong {
+      font-weight: 600;
+      font-style: italic;
+      color: var(--rust);
+    }
+
+    .thin-rule {
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(to right, var(--amber), transparent);
+      margin-bottom: 3rem;
+      opacity: 0.3;
+    }
+
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2rem 0;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      padding-left: calc(8vw + 1rem);
+      padding-right: 2rem;
+      max-width: 900px;
+    }
+
+    .hero-orb-1 {
+      position: absolute;
+      width: 520px;
+      height: 520px;
+      top: -100px;
+      right: -100px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(212,168,67,0.055) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-orb-2 {
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      bottom: -80px;
+      left: 5%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,79,44,0.045) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .hero-circle-deco {
+      position: absolute;
+      right: 12%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,168,67,0.1);
+      pointer-events: none;
+    }
+
+    .hero-circle-deco::before {
+      content: '';
+      position: absolute;
+      inset: 18px;
+      border-radius: 50%;
+      border: 1px solid rgba(212,168,67,0.07);
+    }
+
+    .hero-circle-deco::after {
+      content: '';
+      position: absolute;
+      inset: 40px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,79,44,0.06);
+    }
+
+    .hero-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.28em;
+      color: var(--amber);
+      border: 1px solid rgba(212,168,67,0.28);
+      padding: 0.35rem 1rem;
+      margin-bottom: 2.5rem;
+      display: inline-block;
+    }
+
+    header h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(4rem, 11vw, 9rem);
+      line-height: 0.92;
+      letter-spacing: 0.01em;
+      color: var(--bright);
+      margin-bottom: 1.75rem;
+    }
+
+    header h1 em {
+      font-style: italic;
+      font-weight: 600;
+      color: var(--rust);
+      display: block;
+    }
+
+    header p.hero-sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      color: #8a7e6a;
+      line-height: 2.2;
+      margin-bottom: 3rem;
+    }
+
+    .hero-cta {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid rgba(212,168,67,0.4);
+      padding: 0.8rem 2rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      transition: all 0.25s;
+      background: transparent;
+    }
+
+    .hero-cta:hover {
+      background: var(--amber-glow);
+      color: var(--amber);
+      border-color: var(--amber);
+    }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.5rem;
+      left: calc(8vw + 1rem);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      color: #4a4438;
+    }
+
+    .scroll-hint::before {
+      content: '';
+      display: block;
+      width: 40px;
+      height: 1px;
+      background: var(--amber);
+      opacity: 0.4;
+      animation: grow-line 2s ease-in-out infinite;
+    }
+
+    @keyframes grow-line {
+      0%, 100% { width: 20px; opacity: 0.2; }
+      50%       { width: 50px; opacity: 0.6; }
+    }
+
+
+    #about {
+      background: var(--bg-2);
+    }
+
+    .about-line {
+      width: 2px;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      min-height: 80px;
+      margin-bottom: 2rem;
+      opacity: 0.5;
+    }
+
+    #about p {
+      font-size: 1.08rem;
+      line-height: 1.9;
+      color: #ccc3ae;
+      margin-bottom: 1.1rem;
+      font-weight: 400;
+    }
+
+    .stat-block {
+      padding: 1.4rem 1.6rem;
+      border-top: 1px solid rgba(212,168,67,0.2);
+      position: relative;
+    }
+
+    .stat-block:last-child {
+      border-bottom: 1px solid rgba(212,168,67,0.1);
+    }
+
+    .stat-block .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 2.6rem;
+      color: var(--rust);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-block .lbl {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      color: var(--dim);
+      text-transform: uppercase;
+    }
+
+
+    #skills {
+      background: var(--bg);
+    }
+
+    .skill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .skill-tag {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      padding: 0.45rem 1rem;
+      border: 1px solid var(--rule);
+      color: #9a9080;
+      text-transform: uppercase;
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .skill-tag:hover {
+      border-color: var(--amber);
+      color: var(--amber);
+      background: var(--amber-glow);
+    }
+
+    .skill-tag.core {
+      border-color: rgba(201,79,44,0.35);
+      color: var(--rust);
+      background: var(--rust-glow);
+    }
+
+    .skill-tag.core:hover {
+      border-color: var(--rust);
+    }
+
+
+    #projects {
+      background: var(--bg-2);
+    }
+
+    .project-card {
+      background: var(--bg-3);
+      border: 1px solid rgba(212,168,67,0.1);
+      overflow: hidden;
+      position: relative;
+      height: 100%;
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(212,168,67,0.35);
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--amber), transparent);
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 1;
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-img-wrapper {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card img {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      filter: sepia(20%) brightness(0.82) saturate(0.9);
+      transition: filter 0.4s ease;
+    }
+
+    .project-card:hover img {
+      filter: sepia(0%) brightness(1) saturate(1);
+    }
+
+    .card-label {
+      position: absolute;
+      top: 0.8rem;
+      left: 0.8rem;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid rgba(212,168,67,0.5);
+      background: rgba(26,22,16,0.88);
+      padding: 0.2rem 0.6rem;
+    }
+
+    .card-body {
+      padding: 1.6rem;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      font-size: 1.3rem;
+      color: var(--bright);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .card-text {
+      font-size: 0.92rem;
+      color: #b0a898;
+      line-height: 1.75;
+      margin-bottom: 1.3rem;
+    }
+
+    .btn-card {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--amber);
+      border: 1px solid rgba(212,168,67,0.35);
+      background: transparent;
+      padding: 0.45rem 1.1rem;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+    }
+
+    .btn-card:hover {
+      background: var(--amber-glow);
+      border-color: var(--amber);
+      color: var(--amber);
+    }
+
+
+    #contact {
+      background: var(--bg);
+      text-align: center;
+    }
+
+    #contact .section-title {
+      margin-bottom: 0.75rem;
+    }
+
+    #contact p.sub {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      color: var(--dim);
+      margin-bottom: 2.5rem;
+    }
+
+    .contact-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .contact-btn {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      padding: 0.8rem 2.2rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.25s;
+    }
+
+    .contact-btn.primary {
+      background: var(--amber);
+      color: var(--bg);
+      border: 1px solid var(--amber);
+      font-weight: 700;
+    }
+
+    .contact-btn.primary:hover {
+      background: var(--amber-dim);
+      border-color: var(--amber-dim);
+      color: var(--bg);
+    }
+
+    .contact-btn.ghost {
+      color: var(--rust);
+      border: 1px solid rgba(201,79,44,0.35);
+      background: transparent;
+    }
+
+    .contact-btn.ghost:hover {
+      background: var(--rust-glow);
+      border-color: var(--rust);
+    }
+
+    .contact-deco {
+      width: 1px;
+      height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(212,168,67,0.3), transparent);
+      margin: 0 auto 3rem;
+    }
+
+
+    footer {
+      background: var(--bg-2);
+      border-top: 1px solid rgba(212,168,67,0.08);
+      padding: 2.5rem;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    footer p {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      color: #3f3a30;
+    }
+
+    footer span {
+      color: var(--amber);
+    }
+
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-expand-md">
+    <div class="container">
+      <a class="navbar-brand" href="#">N. Nelson</a>
+      <button class="navbar-toggler border-0" type="button"
+        data-bs-toggle="collapse" data-bs-target="#navMenu"
+        style="filter: sepia(1) saturate(2) hue-rotate(5deg) brightness(0.8);">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+        <ul class="navbar-nav gap-3">
+          <li class="nav-item"><a class="nav-link" href="#about">about</a></li>
+          <li class="nav-item"><a class="nav-link" href="#skills">skills</a></li>
+          <li class="nav-item"><a class="nav-link" href="#projects">projects</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <header>
+    <div class="hero-orb-1"></div>
+    <div class="hero-orb-2"></div>
+    <div class="hero-circle-deco"></div>
+    <div class="hero-inner">
+      <span class="hero-tag">PORTFOLIO — UC BERKELEY — 2026</span>
+      <h1>
+        Nassirah
+        <em>Nelson</em>
+      </h1>
+      <p class="hero-sub">
+        ENGINEER &nbsp;/&nbsp; DESIGNER &nbsp;/&nbsp; EDUCATOR<br>
+        BUILDING WHAT MATTERS<br>
+        AT THE EDGE OF WHAT IS POSSIBLE
+      </p>
+      <a href="#projects" class="hero-cta">View Work &rarr;</a>
+    </div>
+    <div class="scroll-hint">SCROLL</div>
+  </header>
+
+
+  <section id="about">
+    <div class="container">
+      <div class="row align-items-start g-5">
+        <div class="col-lg-7 fade-up">
+          <span class="eyebrow">001 — About</span>
+          <h2 class="section-title">Who<br><strong>I Am</strong></h2>
+          <div class="about-line"></div>
+          <p>I am an engineer, designer, educator, and community builder, exploring ways to make emerging technologies more approachable. My work lives between physical computing, learning design, AI literacy, and speculative futures.</p>
+          <p>I am especially interested in creating systems that help people engage with complex technology through touch, play, and collaboration.</p>
+        </div>
+        <div class="col-lg-5 fade-up">
+          <span class="eyebrow" style="margin-bottom: 1.5rem;">Vitals</span>
+          <div class="stat-block">
+            <div class="num">2026</div>
+            <div class="lbl">Expected graduation</div>
+          </div>
+          <div class="stat-block">
+            <div class="num">3+</div>
+            <div class="lbl">Projects shipped</div>
+          </div>
+          <div class="stat-block">
+            <div class="num">CAL</div>
+            <div class="lbl">UC Berkeley</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="skills">
+    <div class="container fade-up">
+      <span class="eyebrow">002 — Skills</span>
+      <h2 class="section-title">Tools &amp;<br><strong>Stack</strong></h2>
+      <div class="thin-rule"></div>
+      <div class="skill-grid">
+        <span class="skill-tag core">Creative Technology</span>
+        <span class="skill-tag core">Physical Computing</span>
+        <span class="skill-tag core">Interaction Design</span>
+        <span class="skill-tag">AI Literacy &amp; Education</span>
+        <span class="skill-tag">Embedded Systems</span>
+        <span class="skill-tag">Prototyping</span>
+        <span class="skill-tag">Robotics &amp; Responsive Systems</span>
+        <span class="skill-tag">Participatory Learning Design</span>
+        <span class="skill-tag">Experimental Interface Design</span>
+        <span class="skill-tag">Community-Centered Innovation</span>
+        <span class="skill-tag">Workshop Facilitation</span>
+        <span class="skill-tag">Curriculum Design</span>
+      </div>
+    </div>
+  </section>
+
+
+  <section id="projects">
+    <div class="container">
+      <span class="eyebrow fade-up">003 — Work</span>
+      <h2 class="section-title fade-up">Featured<br><strong>Projects</strong></h2>
+      <div class="thin-rule fade-up"></div>
+
+      <div class="row g-4">
+
+        <div class="col-12 col-sm-6 col-lg-4 d-flex fade-up">
+          <div class="project-card w-100">
+            <div class="card-img-wrapper">
+              <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#211d16;">
+                <defs>
+                  <radialGradient id="g1a" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#d4a843" stop-opacity="0.08"/>
+                    <stop offset="100%" stop-color="#211d16" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect width="800" height="600" fill="#211d16"/>
+                <circle cx="400" cy="300" r="280" fill="url(#g1a)"/>
+                <circle cx="400" cy="300" r="140" fill="none" stroke="#d4a843" stroke-width="0.8" stroke-opacity="0.25"/>
+                <circle cx="400" cy="300" r="100" fill="none" stroke="#d4a843" stroke-width="0.8" stroke-opacity="0.18"/>
+                <circle cx="400" cy="300" r="60"  fill="none" stroke="#d4a843" stroke-width="0.8" stroke-opacity="0.12"/>
+                <g transform="translate(400,300)">
+                  <circle cx="-80" cy="-46" r="22" fill="none" stroke="#d4a843" stroke-width="1.2" stroke-opacity="0.7"/>
+                  <circle cx="80"  cy="-46" r="22" fill="none" stroke="#d4a843" stroke-width="1.2" stroke-opacity="0.7"/>
+                  <circle cx="0"   cy="92"  r="22" fill="none" stroke="#d4a843" stroke-width="1.2" stroke-opacity="0.7"/>
+                  <circle cx="-80" cy="-46" r="6"  fill="#d4a843" fill-opacity="0.6"/>
+                  <circle cx="80"  cy="-46" r="6"  fill="#d4a843" fill-opacity="0.6"/>
+                  <circle cx="0"   cy="92"  r="6"  fill="#d4a843" fill-opacity="0.6"/>
+                  <line x1="-80" y1="-46" x2="80"  y2="-46" stroke="#d4a843" stroke-width="0.7" stroke-opacity="0.35"/>
+                  <line x1="-80" y1="-46" x2="0"   y2="92"  stroke="#d4a843" stroke-width="0.7" stroke-opacity="0.35"/>
+                  <line x1="80"  y1="-46" x2="0"   y2="92"  stroke="#d4a843" stroke-width="0.7" stroke-opacity="0.35"/>
+                  <circle cx="0" cy="0" r="12" fill="none" stroke="#c94f2c" stroke-width="1" stroke-opacity="0.6"/>
+                  <circle cx="0" cy="0" r="3"  fill="#c94f2c" fill-opacity="0.7"/>
+                </g>
+                <line x1="0" y1="580" x2="800" y2="580" stroke="#d4a843" stroke-width="0.5" stroke-opacity="0.15"/>
+                <text x="400" y="556" text-anchor="middle" font-family="monospace" font-size="9" fill="#d4a843" fill-opacity="0.4" letter-spacing="4">COLLABORATION — GROUP_01</text>
+              </svg>
+              <span class="card-label">Collaboration</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">J220 Group Project</h5>
+              <p class="card-text">A collaborative class project with a team of six, featuring individual member pages and a shared group landing experience.</p>
+              <a href="https://nascodeswell.github.io/group-1/" target="_blank" class="btn-card">View Project &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4 d-flex fade-up">
+          <div class="project-card w-100">
+            <div class="card-img-wrapper">
+              <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#211d16;">
+                <defs>
+                  <radialGradient id="g2a" cx="60%" cy="40%" r="55%">
+                    <stop offset="0%" stop-color="#c94f2c" stop-opacity="0.1"/>
+                    <stop offset="100%" stop-color="#211d16" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect width="800" height="600" fill="#211d16"/>
+                <circle cx="480" cy="240" r="260" fill="url(#g2a)"/>
+                <circle cx="400" cy="290" r="155" fill="none" stroke="#c94f2c" stroke-width="0.7" stroke-opacity="0.18"/>
+                <circle cx="400" cy="290" r="115" fill="none" stroke="#c94f2c" stroke-width="0.7" stroke-opacity="0.13"/>
+                <g transform="translate(400,285)">
+                  <ellipse cx="0" cy="0" rx="72" ry="88" fill="none" stroke="#d4a843" stroke-width="1.2" stroke-opacity="0.55"/>
+                  <line x1="0" y1="-88" x2="0" y2="88"   stroke="#d4a843" stroke-width="0.7" stroke-opacity="0.3"/>
+                  <line x1="-72" y1="0" x2="72" y2="0"   stroke="#d4a843" stroke-width="0.7" stroke-opacity="0.3"/>
+                  <line x1="-50" y1="-62" x2="50" y2="62" stroke="#d4a843" stroke-width="0.5" stroke-opacity="0.18"/>
+                  <line x1="50" y1="-62" x2="-50" y2="62" stroke="#d4a843" stroke-width="0.5" stroke-opacity="0.18"/>
+                  <circle cx="0"   cy="-88" r="4" fill="#d4a843" fill-opacity="0.5"/>
+                  <circle cx="0"   cy="88"  r="4" fill="#d4a843" fill-opacity="0.5"/>
+                  <circle cx="-72" cy="0"   r="4" fill="#d4a843" fill-opacity="0.5"/>
+                  <circle cx="72"  cy="0"   r="4" fill="#d4a843" fill-opacity="0.5"/>
+                  <circle cx="0" cy="0" r="18" fill="none" stroke="#c94f2c" stroke-width="1.2" stroke-opacity="0.6"/>
+                  <circle cx="0" cy="0" r="5"  fill="#c94f2c" fill-opacity="0.65"/>
+                  <line x1="-110" y1="0" x2="-80" y2="0" stroke="#c94f2c" stroke-width="0.8" stroke-opacity="0.4"/>
+                  <line x1="80"   y1="0" x2="110" y2="0" stroke="#c94f2c" stroke-width="0.8" stroke-opacity="0.4"/>
+                </g>
+                <line x1="0" y1="580" x2="800" y2="580" stroke="#c94f2c" stroke-width="0.5" stroke-opacity="0.15"/>
+                <text x="400" y="556" text-anchor="middle" font-family="monospace" font-size="9" fill="#c94f2c" fill-opacity="0.4" letter-spacing="4">WEB DESIGN — RECIPE_04</text>
+              </svg>
+              <span class="card-label">Web Design</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Recipe Page</h5>
+              <p class="card-text">A clean, readable recipe page for Chicken Tikka Masala with structured ingredients and step-by-step instructions.</p>
+              <a href="https://nascodeswell.github.io/04-recipe/" target="_blank" class="btn-card">View Project &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-sm-6 col-lg-4 d-flex fade-up">
+          <div class="project-card w-100">
+            <div class="card-img-wrapper">
+              <svg viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg" style="width:100%;display:block;background:#211d16;">
+                <defs>
+                  <radialGradient id="g3a" cx="40%" cy="60%" r="50%">
+                    <stop offset="0%" stop-color="#d4a843" stop-opacity="0.07"/>
+                    <stop offset="100%" stop-color="#211d16" stop-opacity="0"/>
+                  </radialGradient>
+                  <radialGradient id="g3b" cx="65%" cy="35%" r="40%">
+                    <stop offset="0%" stop-color="#c94f2c" stop-opacity="0.06"/>
+                    <stop offset="100%" stop-color="#211d16" stop-opacity="0"/>
+                  </radialGradient>
+                </defs>
+                <rect width="800" height="600" fill="#211d16"/>
+                <rect width="800" height="600" fill="url(#g3a)"/>
+                <rect width="800" height="600" fill="url(#g3b)"/>
+                <g stroke="#d4a843" stroke-opacity="0.12" stroke-width="0.6" fill="none">
+                  <line x1="160" y1="60"  x2="640" y2="60"/>
+                  <line x1="160" y1="150" x2="640" y2="150"/>
+                  <line x1="160" y1="240" x2="640" y2="240"/>
+                  <line x1="160" y1="330" x2="640" y2="330"/>
+                  <line x1="160" y1="420" x2="640" y2="420"/>
+                  <line x1="160" y1="510" x2="640" y2="510"/>
+                  <line x1="160" y1="60"  x2="160" y2="510"/>
+                  <line x1="280" y1="60"  x2="280" y2="510"/>
+                  <line x1="400" y1="60"  x2="400" y2="510"/>
+                  <line x1="520" y1="60"  x2="520" y2="510"/>
+                  <line x1="640" y1="60"  x2="640" y2="510"/>
+                </g>
+                <polyline points="175,420 220,370 270,390 320,310 370,280 420,240 470,260 530,190 610,150" fill="none" stroke="#d4a843" stroke-width="1.5" stroke-opacity="0.5" stroke-linejoin="round"/>
+                <polyline points="175,460 240,440 300,420 360,380 430,350 490,330 560,300 620,270" fill="none" stroke="#c94f2c" stroke-width="1" stroke-opacity="0.35" stroke-linejoin="round" stroke-dasharray="4 4"/>
+                <circle cx="320" cy="310" r="7"  fill="none" stroke="#d4a843" stroke-width="1.2" stroke-opacity="0.8"/>
+                <circle cx="320" cy="310" r="2.5" fill="#d4a843" fill-opacity="0.8"/>
+                <circle cx="470" cy="260" r="7"  fill="none" stroke="#d4a843" stroke-width="1.2" stroke-opacity="0.8"/>
+                <circle cx="470" cy="260" r="2.5" fill="#d4a843" fill-opacity="0.8"/>
+                <circle cx="530" cy="190" r="10" fill="none" stroke="#c94f2c" stroke-width="1.4" stroke-opacity="0.7"/>
+                <circle cx="530" cy="190" r="3"  fill="#c94f2c" fill-opacity="0.8"/>
+                <line x1="530" y1="180" x2="530" y2="155" stroke="#c94f2c" stroke-width="0.8" stroke-opacity="0.5"/>
+                <rect x="510" y="135" width="60" height="18" fill="#2a251d" stroke="#c94f2c" stroke-width="0.7" stroke-opacity="0.5" rx="1"/>
+                <text x="540" y="148" text-anchor="middle" font-family="monospace" font-size="8" fill="#c94f2c" fill-opacity="0.7">POINT A</text>
+                <line x1="0" y1="580" x2="800" y2="580" stroke="#d4a843" stroke-width="0.5" stroke-opacity="0.15"/>
+                <text x="400" y="556" text-anchor="middle" font-family="monospace" font-size="9" fill="#d4a843" fill-opacity="0.4" letter-spacing="4">DATA STORYTELLING — MAP_06</text>
+              </svg>
+              <span class="card-label">Data Storytelling</span>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">Scrolly Map</h5>
+              <p class="card-text">An interactive scrollytelling map built with MapLibre, guiding viewers through a spatial narrative as they scroll.</p>
+              <a href="https://nascodeswell.github.io/06-scrolly-map/" target="_blank" class="btn-card">View Project &rarr;</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <section id="contact">
+    <div class="container fade-up">
+      <span class="eyebrow">004 — Contact</span>
+      <h2 class="section-title">Let's<br><strong>Connect</strong></h2>
+      <div class="contact-deco"></div>
+      <p class="sub">Open to opportunities, collaborations, and conversations.</p>
+      <div class="contact-links">
+        <a href="mailto:nassirah@berkeley.edu" class="contact-btn primary">&#9654;&nbsp; Email Me</a>
+        <a href="https://www.linkedin.com/in/nassirah-nelson-a420711b5" target="_blank" class="contact-btn ghost">LinkedIn</a>
+        <a href="https://www.instagram.com/nasrockswell/" target="_blank" class="contact-btn ghost">Instagram</a>
+      </div>
+    </div>
+  </section>
+
+
+  <footer>
+    <p>&copy; 2026 &nbsp;<span>Nassirah Nelson</span>&nbsp; &mdash; &nbsp;UC Berkeley</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+
+    document.querySelectorAll('.fade-up').forEach((el) => observer.observe(el));
+
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
